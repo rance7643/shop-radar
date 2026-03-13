@@ -355,14 +355,19 @@ with sync_playwright() as p:
         print(format_line_message(item, i))
         print("-" * 50)
 
-    if filtered:
+if filtered:
+
     messages = []
+
     for i, item in enumerate(filtered[:3], start=1):
         messages.append(format_line_message(item, i))
 
     header = f"✨ 店面雷達更新\n本次找到 {len(filtered)} 筆新物件，以下先推播前 3 筆：\n"
-    final_message = header + "\n\n" + "\n\n" + ("—" * 10) + "\n\n".join(messages)
+
+    final_message = header + "\n\n" + "\n\n----------\n\n".join(messages)
+
     send_line_broadcast(final_message)
+
 else:
     print("沒有新物件，這次不發 LINE")
 
