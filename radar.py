@@ -282,10 +282,10 @@ def extract_cards_from_page(page):
 
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(headless=False)
+    browser = p.chromium.launch(headless=True)
     page = browser.new_page()
     page.goto(URL, wait_until="domcontentloaded", timeout=60000)
-    page.wait_for_timeout(8000)
+    page.wait_for_timeout(15000)
 
     print("目前頁面標題：", page.title())
 
