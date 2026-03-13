@@ -21,7 +21,7 @@ jobs:
       - name: Install packages
         run: |
           pip install playwright folium requests
-          playwright install chromium
+          playwright install --with-deps chromium
 
       - name: Run radar
         env:
