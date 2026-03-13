@@ -214,17 +214,17 @@ def format_line_message(item, index):
     food_text = "是" if item["food_ok"] else "否"
 
     return (
-        f"新物件 {index}\n"
-        f"名稱：{item['name']}\n"
-        f"地區：{item['area']}\n"
-        f"租金：{item['rent']:,}\n"
-        f"坪數：{item['ping']}坪\n"
-        f"樓層：{item['floor']}\n"
-        f"型態：{item['shop_kind']}\n"
-        f"可餐飲：{food_text}\n"
-        f"捷運距離：{item['mrt']}公尺\n"
-        f"評分：{item['score']}分\n"
-        f"連結：{item['link']}"
+        f"🏠 店面雷達｜新物件 {index}\n\n"
+        f"📍 名稱：{item['name']}\n"
+        f"🗺 地區：{item['area']}\n"
+        f"💰 租金：{item['rent']:,} 元/月\n"
+        f"📐 坪數：{item['ping']} 坪\n"
+        f"🏢 樓層：{item['floor']}\n"
+        f"🏷 型態：{item['shop_kind']}\n"
+        f"🍽 可餐飲：{food_text}\n"
+        f"🚇 捷運距離：{item['mrt']} 公尺\n"
+        f"⭐ 評分：{item['score']} 分\n"
+        f"🔗 連結：{item['link']}"
     )
 
 
@@ -356,14 +356,15 @@ with sync_playwright() as p:
         print("-" * 50)
 
     if filtered:
-        messages = []
-        for i, item in enumerate(filtered[:3], start=1):
-            messages.append(format_line_message(item, i))
+    messages = []
+    for i, item in enumerate(filtered[:3], start=1):
+        messages.append(format_line_message(item, i))
 
-        final_message = "\\n\\n".join(messages)
-        send_line_broadcast(final_message)
-    else:
-        print("沒有新物件，這次不發 LINE")
+    header = f"✨ 店面雷達更新\n本次找到 {len(filtered)} 筆新物件，以下先推播前 3 筆：\n"
+    final_message = header + "\n\n" + "\n\n" + ("—" * 10) + "\n\n".join(messages)
+    send_line_broadcast(final_message)
+else:
+    print("沒有新物件，這次不發 LINE")
 
     m = folium.Map(location=[25.04, 121.54], zoom_start=12)
 
